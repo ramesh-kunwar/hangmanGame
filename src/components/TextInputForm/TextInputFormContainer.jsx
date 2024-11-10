@@ -1,36 +1,48 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TextInputForm from "./TextInputForm";
+import { useNavigate } from "react-router-dom";
 
-const TextInputFormContainer = () => {
-  // let inputType = "text";
-  const [inputType, setInputType] = useState("password");
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    console.log("Form submitted");
-  }
+function TextInputFormContainer() {
 
-  function handleTextInputChange(event) {
-    console.log(event.target.value);
-  }
+    const [inputType, setInputType] = useState("password");
+    const [value, setValue] = useState("");
 
-  function handleShowHideClick() {
-    console.log("Show/Hide button clicked");
-    if (inputType === "password") {
-      // inputType = "text";
-      setInputType("text");
-    } else {
-      // inputType = "password";
-      setInputType("password");
+    const navigate = useNavigate(); // useNavigate is a hook that returns a navigate function
+
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        console.log("Form submitted", value);
+        if(value) {
+            // if we have something in value then we want to go to the play page
+            navigate(`/play`, { state: { wordSelected: value } });
+        }
     }
-  }
-  return (
-    <TextInputForm
-      inputType={inputType}
-      handleFormSubmit={handleFormSubmit}
-      handleTextInputChange={handleTextInputChange}
-      handleShowHideClick={handleShowHideClick}
-    />
-  );
-};
+
+    function handleTextInputChange(event) {
+        console.log("Text input changed");
+        console.log(event.target.value);
+        setValue(event.target.value);
+    }
+
+    function handleShowHideClick() {
+        console.log("Show/Hide button clicked");
+        if (inputType === "password") {
+            setInputType("text")
+        } else {
+            setInputType("password");
+        }
+        console.log(inputType);
+        
+    }
+
+    return (
+        <TextInputForm 
+            inputType={inputType}
+            handleFormSubmit={handleFormSubmit} 
+            handleTextInputChange={handleTextInputChange} 
+            handleShowHideClick={handleShowHideClick}
+        />
+    );
+}
 
 export default TextInputFormContainer;

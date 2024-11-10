@@ -1,11 +1,17 @@
-import TextInputFormContainer from "./components/TextInputForm/TextInputFormContainer";
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
+import StartGame from './pages/StartGame'
+import PlayGame from './pages/PlayGame'
 
-const App = () => {
+function App() {
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <TextInputFormContainer />
-    </div>
-  );
-};
+      <Routes>
+        <Route path='/start' element={<StartGame />} />
+        <Route path='/play' element={<PlayGame />} />
+        <Route path='/' element={<div>Home</div>} />
+      </Routes>
+  )
+}
 
-export default App;
+export default App
